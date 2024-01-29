@@ -4,24 +4,23 @@ stages:
   - deploy
 
 variables:
-  CONTAINER_REGISTRY: "terraform/hello-word"
-  AWS_DEFAULT_REGION: "us-east-1"
+  AWS_DEFAULT_REGION: "us-west-2"
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+  S3_BUCKET: "my-logs-app-bucket"
+  TAG: "v2"
 
 build:
   stage: build
-  image: docker:20.10.16
   when: manual
+  image: 
+    name: docker:20.10.16
   services:
     - docker:20.10.16-dind
-  variables:
-    IMAGE_TAG: $CI_PIPELINE_ID
-  before_script:
-    - docker --version
   script:
-    - docker build -f kubernetes/Dockerfile -t $CONTAINER_REGISTRY:$IMAGE_TAG .
-    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+    - docker build -f kubernetes/Dockerfile -t $CI_REGISTRY_USER/hello-word-app:$TAG .
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    - docker push $CI_REGISTRY_USER/hello-word-app:$TAG
 
 deploy:
   stage: deploy
@@ -39,8 +38,9 @@ deploy:
     - apt-get install -y awscli 
     
   script: 
-    - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name sandra-eks-wjIg8seS
-    - kubectl get nodes
+    - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name sandra-eks
     - kubectl apply -f kubernetes/deployment.yaml
     - kubectl apply -f kubernetes/service.yaml
     - kubectl apply -f kubernetes/network.yaml
+    - kubectl logs deployment/hello-world-deployment > application_logs.txt
+    - aws s3 cp application_logs.txt s3://$S3_BUCKET/

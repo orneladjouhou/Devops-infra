@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: hello-world-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: hello-world
@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: hello-world
-          image: aac14/sample_docker:dev-0.1.5
+          image: ornichou/hello-word-app:v2
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
-
+            - containerPort: 8080
