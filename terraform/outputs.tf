@@ -18,3 +18,8 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = module.eks.cluster_name
 }
+
+output "bucket_id" {
+   description = "S3 identity"
+  value = aws_s3_bucket.bucket.id
+}

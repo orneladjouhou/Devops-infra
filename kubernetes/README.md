@@ -12,7 +12,7 @@ The project is organized as follows:
 - **deployment.yaml**: Kubernetes Deployment manifest.
 - **service.yaml**: Kubernetes Service manifest.
 - **ingress.yaml**: Kubernetes Ingress manifest.
-- **.gitlab-ci.yml**: GitLab CI configuration (for CI/CD, optional).
+- **.gitlab-ci.yml**: GitLab CI configuration (for CI/CD).
 
 ## 1. Containerize a Simple Application
 
@@ -22,9 +22,9 @@ The project is organized as follows:
 
 ### Steps
 
-1. Create a Python-based Hello World application in `app.py`.
+1. Create a Python-based Hello World application in `hello.py`.
 2. Create a Dockerfile with instructions for building the Docker image.
 3. Execute the following command to build the Docker image:
 
    ```bash
-   docker  build -t hello-world:latest .
+   docker  build -t hello-world-app:v2 .
