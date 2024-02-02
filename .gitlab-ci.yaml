@@ -42,5 +42,5 @@ deploy:
     - kubectl apply -f kubernetes/deployment.yaml
     - kubectl apply -f kubernetes/service.yaml
     - kubectl apply -f kubernetes/network.yaml
-    - kubectl logs deployment/hello-world-deployment > application_logs.txt
+    - kubectl logs deployment/hello-world-deployment >> application_logs.txt
     - aws s3 cp application_logs.txt s3://$S3_BUCKET/
