@@ -7,7 +7,7 @@ This project demonstrates the deployment of a simple Python-based Hello World mi
 
 The project is organized as follows:
 
-- **app.py**: Simple Python-based Hello World application.
+- **hello.py**: Simple Python-based Hello World application.
 - **Dockerfile**: Dockerfile for containerizing the Python application.
 - **deployment.yaml**: Kubernetes Deployment manifest.
 - **service.yaml**: Kubernetes Service manifest.
