@@ -3,7 +3,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY kubernetes/hello.py /app
+COPY hello.py /app
 
 RUN pip install flask
 
